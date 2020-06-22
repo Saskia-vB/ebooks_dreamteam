@@ -1,0 +1,9 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <h1>Sparta e-Book Store</h1>
+    {% for ebook in ebooks %}
+        <h1>  {{ ebook.bookTitle }} </h1>
+        <h4>By {{ ebook.Author }} </h4>
+    {% endfor %}
+{% endblock content %}
