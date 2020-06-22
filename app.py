@@ -41,7 +41,7 @@ def create_ebook():
         db.session.add(book)
         db.session.commit()
         flash(f'{form.title.data} has been added to the database!', 'success')
-        return redirect(url_for('home'))
+        return redirect('home')
     return render_template('create_ebook.html', form=form)
 
 
