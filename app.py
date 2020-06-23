@@ -3,11 +3,11 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField
 from wtforms.validators import DataRequired, Length, Email, EqualTo
 from flask_sqlalchemy import SQLAlchemy
+
+
 app = Flask(__name__)
-
 app.config['SECRET_KEY'] = 'a76hfb34ls9u6ty6'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
-
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///e.db'
 db = SQLAlchemy(app)
 
 
@@ -18,10 +18,10 @@ class CreateBookForm(FlaskForm):
 
 
 # eBook class
-class Ebook(db.Model):
+class Book(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(20), nullable=False)
-    author = db.Column(db.String(20), nullable=False)
+    title = db.Column(db.String(100), nullable=False)
+    author = db.Column(db.String(100), nullable=False)
 
     def __repr__(self):
         return f"('{self.id}', '{self.title}', '{self.author}')"
@@ -30,18 +30,20 @@ class Ebook(db.Model):
 @app.route('/')
 @app.route('/home')
 def home():
-    return render_template('home.html')
+    books = Book.query.all()
+    return render_template('home.html', ebooks=books)
 
 
 @app.route('/create_ebook', methods=['POST', 'GET'])
 def create_ebook():
     form = CreateBookForm()
+
     if form.validate_on_submit():
-        book = Ebook(title=form.title.data, author=form.author.data)
-        db.session.add(book)
+        db.session.add(Book(title=form.title.data, author=form.author.data))
         db.session.commit()
         flash(f'{form.title.data} has been added to the database!', 'success')
-        return redirect('home')
+        render_template('home.html')
+
     return render_template('create_ebook.html', form=form)
 
 
