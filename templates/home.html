@@ -1,9 +1,21 @@
 {% extends "layout.html" %}
 
 {% block content %}
-    <h1>Sparta e-Book Store</h1>
+<br>
+    <center><h1>Our exciting eBooks</h1></center>
+<br>
+<div class="container">
+    <div class="row">
     {% for ebook in ebooks %}
-        <h1>  {{ ebook.bookTitle }} </h1>
-        <h4>By {{ ebook.Author }} </h4>
+        <div class="card" style="width: 20rem; margin: 25px;">
+          <img class="card-img-top" src="https://images.pexels.com/photos/1029141/pexels-photo-1029141.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt="Card image cap" width="150px" height="150px">
+          <div class="card-body">
+            <h5 class="card-title">{{ebook.title}}</h5>
+            <p class="card-text">An eBook by {{ebook.author}}</p>
+            <a href="#" class="btn btn-primary">Read Now</a>
+          </div>
+        </div>
     {% endfor %}
+    </div>
+</div>
 {% endblock content %}
