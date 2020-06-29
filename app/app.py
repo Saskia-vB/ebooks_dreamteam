@@ -24,7 +24,7 @@ class Book(db.Model):
     author = db.Column(db.String(100), nullable=False)
 
     def __repr__(self):
-        return f"('{self.id}', '{self.title}', '{self.author}')"
+        return (self.id, self.title, self.author)
 
 
 @app.route('/')
@@ -41,7 +41,7 @@ def create_ebook():
     if form.validate_on_submit():
         db.session.add(Book(title=form.title.data, author=form.author.data))
         db.session.commit()
-        flash(f'{form.title.data} has been added to the database!', 'success')
+        flash(form.title.data, "has been added to the database!, success")
         render_template('home.html')
 
     return render_template('create_ebook.html', form=form)
@@ -49,4 +49,4 @@ def create_ebook():
 
 # debug mode
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
